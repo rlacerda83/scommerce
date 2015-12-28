@@ -1,0 +1,60 @@
+CommonBundle\Entity\VariationAttribute:
+    type: entity
+    table: variation_attribute
+    indexes:
+        FK_var_atr_idVariacao:
+            columns:
+                - variation_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        value:
+            type: string
+            nullable: false
+            length: 30
+            options:
+                fixed: false
+                default: ''
+        order:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        status:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+        unique:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+    manyToOne:
+        variation:
+            targetEntity: Variation
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                variation_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        sku:
+            targetEntity: ProductSku
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: attribute
+            inversedBy: null
+            joinTable: null
+            orderBy: null
+    lifecycleCallbacks: {  }

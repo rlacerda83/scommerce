@@ -1,0 +1,53 @@
+CommonBundle\Entity\OrderItem:
+    type: entity
+    table: order_item
+    indexes:
+        order_id:
+            columns:
+                - order_id
+        sku:
+            columns:
+                - sku
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        qty:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        unitPrice:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            column: unit_price
+    manyToOne:
+        order:
+            targetEntity: Order
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                order_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        sku:
+            targetEntity: ProductSku
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sku:
+                    referencedColumnName: sku
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

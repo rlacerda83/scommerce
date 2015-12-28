@@ -1,0 +1,56 @@
+CommonBundle\Entity\Category:
+    type: entity
+    repositoryClass: CommonBundle\Repository\CategoryRepository
+    table: category
+    indexes:
+        parent_category:
+            columns:
+                - parent_category_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        order:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '1'
+        status:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+    manyToOne:
+        parentCategory:
+            targetEntity: Category
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                parent_category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        product:
+            targetEntity: Product
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: category
+            inversedBy: null
+            joinTable: null
+            orderBy: null
+    lifecycleCallbacks: {  }

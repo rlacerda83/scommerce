@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        {% block stylesheets %}
+
+            <link href="{{ asset('bootstrap.min.css', 'site_css') }}" rel="stylesheet">
+            <link href="{{ asset('font-awesome.min.css', 'site_css') }}" rel="stylesheet">
+            <link href="{{ asset('prettyPhoto.css', 'site_css') }}" rel="stylesheet">
+            <link href="{{ asset('price-range.css', 'site_css') }}" rel="stylesheet">
+            <link href="{{ asset('animate.css', 'site_css') }}" rel="stylesheet">
+            <link href="{{ asset('main.css', 'site_css') }}" rel="stylesheet">
+            <link href="{{ asset('responsive.css', 'site_css') }}" rel="stylesheet">
+
+            <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+            <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+            <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+            <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+    </head>
+    <body>
+        {{ include('@Site/header.html.twig') }}
+        {% block body %}{% endblock %}
+        {{ include('@site/footer.html.twig') }}
+
+        {% block javascripts %}
+            <!--[if lt IE 9]>
+            <script src="{{ asset('html5shiv.js', 'site_js') }}"></script>
+            <script src="{{ asset('respond.min.js', 'site_js') }}"></script>
+            <![endif]-->
+
+            <script src="{{ asset('jquery.js', 'site_js') }}"></script>
+            <script src="{{ asset('price-range.js', 'site_js') }}"></script>
+            <script src="{{ asset('jquery.scrollUp.min.js', 'site_js') }}"></script>
+            <script src="{{ asset('bootstrap.min.js', 'site_js') }}"></script>
+            <script src="{{ asset('jquery.prettyPhoto.js', 'site_js') }}"></script>
+            <script src="{{ asset('main.js', 'site_js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

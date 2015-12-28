@@ -1,0 +1,125 @@
+CommonBundle\Entity\Product:
+    type: entity
+    repositoryClass: CommonBundle\Repository\ProductRepository
+    table: product
+    indexes:
+        FK_prod_idMarca:
+            columns:
+                - supplier_id
+        IDX_prod_tags:
+            columns:
+                - tags
+        IDX_prod_nome:
+            columns:
+                - name
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        name:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+        tags:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+        metaTitle:
+            type: string
+            nullable: true
+            length: 70
+            options:
+                fixed: false
+            column: meta_title
+        metaTags:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: meta_tags
+        metaDescription:
+            type: string
+            nullable: true
+            length: 200
+            options:
+                fixed: false
+            column: meta_description
+        description:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+        featured:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+        status:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+    manyToOne:
+        supplier:
+            targetEntity: Suppliers
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                supplier_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        category:
+            targetEntity: Category
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: product
+            joinTable:
+                name: product_category
+                joinColumns:
+                    -
+                        name: product_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: category_id
+                        referencedColumnName: id
+            orderBy: null
+        variation:
+            targetEntity: Variation
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: product
+            joinTable:
+                name: product_variation
+                joinColumns:
+                    -
+                        name: product_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: variation_id
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks: {  }

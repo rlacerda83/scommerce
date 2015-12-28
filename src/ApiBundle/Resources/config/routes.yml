@@ -1,0 +1,4 @@
+api_category:
+    type: rest
+    prefix: /v1
+    resource: "ApiBundle\\Controller\\CategoryController"

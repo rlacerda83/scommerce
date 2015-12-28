@@ -1,0 +1,42 @@
+{% block category %}
+    <div class="col-sm-3">
+        <div class="left-sidebar">
+            <h2>Categorias</h2>
+            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                <?php $listaCategorias = $this->Categorias()->getListagem(); ?>
+                <?php foreach($listaCategorias as $categoria) { ?>
+                <?php $categoriasFilhas = $this->Categorias()->getListagem($categoria->getCodigo()); ?>
+                <?php if($categoriasFilhas->count()) { ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordian" href="#cat-<?php echo $categoria->getCodigo();?>">
+                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                <?php echo $this->escape($categoria->getNome());?>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="cat-<?php echo $categoria->getCodigo();?>" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                <?php foreach($categoriasFilhas as $catFilha) { ?>
+                                <li><a href="<?php echo $this->FriendlyUrl('categoria', $catFilha->getCodigo(), $this->escape($catFilha->getNome())); ?>"><?php echo $this->escape($catFilha->getNome());?></a></li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <?php } else { ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="<?php echo $this->FriendlyUrl('categoria', $categoria->getCodigo(), $this->escape($categoria->getNome())); ?>"><?php echo $this->escape($categoria->getNome());?></a>
+                        </h4>
+                    </div>
+                </div>
+                <?php } ?>
+                <?php } ?>
+            </div><!--/category-products-->
+        </div>
+    </div>
+{% endblock %}
