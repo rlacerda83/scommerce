@@ -8,6 +8,11 @@ namespace CommonBundle\Entity;
 class OrderDelivery
 {
     /**
+     * @var integer
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $address = '';
@@ -62,6 +67,15 @@ class OrderDelivery
      */
     private $order;
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set address

@@ -17,7 +17,6 @@
 /vendor/
 
 # Assets and user uploads
-/web/bundles/
 /web/uploads/
 
 # Assets managed by Bower
@@ -32,3 +31,7 @@
 
 # Composer PHAR
 /composer.phar
+
+
+# PHP Storm
+/.idea

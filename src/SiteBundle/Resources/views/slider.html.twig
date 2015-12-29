@@ -1,0 +1,66 @@
+{% block slider %}
+    <section id="slider"><!--slider-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div data-ride="carousel" class="carousel slide" id="slider-carousel">
+                        <ol class="carousel-indicators">
+                            <li class="" data-slide-to="0" data-target="#slider-carousel"></li>
+                            <li data-slide-to="1" data-target="#slider-carousel" class=""></li>
+                            <li data-slide-to="2" data-target="#slider-carousel" class=""></li>
+                        </ol>
+
+                        <div class="carousel-inner">
+                            <div class="item active left">
+                                <div class="col-sm-6">
+                                    <h1><span>E</span>-SHOPPER</h1>
+                                    <h2>Free E-Commerce Template</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    <button class="btn btn-default get" type="button">Get it now</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img alt="" class="girl img-responsive" src="{{ asset('home/girl1.jpg', 'site_img') }}">
+                                    <img alt="" class="pricing" src="{{ asset('home/pricing.png', 'site_img') }}">
+                                </div>
+                            </div>
+                            <div class="item next left">
+                                <div class="col-sm-6">
+                                    <h1><span>E</span>-SHOPPER</h1>
+                                    <h2>100% Responsive Design</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    <button class="btn btn-default get" type="button">Get it now</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img alt="" class="girl img-responsive" src="{{ asset('home/girl2.jpg', 'site_img') }}">
+                                    <img alt="" class="pricing" src="{{ asset('home/pricing.png', 'site_img') }}">
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1><span>E</span>-SHOPPER</h1>
+                                    <h2>Free Ecommerce Template</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    <button class="btn btn-default get" type="button">Get it now</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img alt="" class="girl img-responsive" src="{{ asset('home/girl3.jpg', 'site_img') }}">
+                                    <img alt="" class="pricing" src="{{ asset('home/pricing.png', 'site_img') }}">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <a data-slide="prev" class="left control-carousel hidden-xs" href="#slider-carousel">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a data-slide="next" class="right control-carousel hidden-xs" href="#slider-carousel">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

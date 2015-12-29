@@ -1,7 +1,15 @@
 CommonBundle\Entity\OrderDelivery:
     type: entity
     table: order_delivery
-    id: {  }
+    id:
+        id:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
     fields:
         address:
             type: string

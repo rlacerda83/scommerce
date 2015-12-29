@@ -2,6 +2,7 @@
 
 namespace SiteBundle\Controller;
 
+use CommonBundle\Services\Api\ApiGateway;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
