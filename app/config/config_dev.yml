@@ -11,6 +11,10 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
+parameters:
+    api.base_url: 'http://ecommerce.api.gateway/api/'
+    api.token: 'f8MOZ9dYU4ap5F12m95PIPAA5AJG3Sh6'
+
 monolog:
     handlers:
         main:

@@ -1,8 +1,10 @@
 <?php
 
-namespace CommonBundle\Services\Api;
+namespace SiteBundle\Services\Api;
 
 use GuzzleHttp\Client as GuzzleClient;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Request;
 
 class ApiGateway
 {
@@ -18,18 +20,19 @@ class ApiGateway
     protected $baseUrl;
 
     /**
-     * Client constructor.
-     * @param $baseUrl
+     * ApiGateway constructor.
+     * @param Container $container
      */
-    public function __construct($baseUrl)
+    public function __construct(Container $container)
     {
-        $this->baseUrl = $baseUrl;
+
+        $this->baseUrl = $container->getParameter('api.base_url');
         $this->client = new GuzzleClient(
             [
-                'base_uri' => $baseUrl,
+                'base_uri' => $this->baseUrl,
                 'headers' => [
                     'Accept'     => 'application/json',
-                    'Api-Token'  => 'key:f8MOZ9dYU4ap5F12m95PIPAA5AJG3Sh6'
+                    'Api-Token'  => 'key:' . $container->getParameter('api.token')
                 ]
             ]
         );
@@ -63,7 +66,7 @@ class ApiGateway
     public function parseQueryString(Request $request)
     {
         $options = [];
-        $params = $request->all();
+        $params = array_merge($request->request->all());
         foreach ($params as $key => $value) {
             $options['query'][$key] = $value;
         }

@@ -1,41 +1,39 @@
 {% block category %}
     <div class="col-sm-3">
         <div class="left-sidebar">
-            <h2>Categorias</h2>
+            <h2>Categories</h2>
             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                <?php $listaCategorias = $this->Categorias()->getListagem(); ?>
-                <?php foreach($listaCategorias as $categoria) { ?>
-                <?php $categoriasFilhas = $this->Categorias()->getListagem($categoria->getCodigo()); ?>
-                <?php if($categoriasFilhas->count()) { ?>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordian" href="#cat-<?php echo $categoria->getCodigo();?>">
-                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                <?php echo $this->escape($categoria->getNome());?>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="cat-<?php echo $categoria->getCodigo();?>" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul>
-                                <?php foreach($categoriasFilhas as $catFilha) { ?>
-                                <li><a href="<?php echo $this->FriendlyUrl('categoria', $catFilha->getCodigo(), $this->escape($catFilha->getNome())); ?>"><?php echo $this->escape($catFilha->getNome());?></a></li>
-                                <?php } ?>
-                            </ul>
+                {% for category in categories %}
+                    {% if category.children|length > 0 %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordian" href="#cat-{{ category.id }}">
+                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        {{ category.name|e }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="cat-{{ category.id }}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        {% for children in category.children  %}
+                                            <li><a href="{{ path('_category', {'id': children.id, 'name': children.name|cleanString}) }}">{{ children.name|e }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <?php } else { ?>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a href="<?php echo $this->FriendlyUrl('categoria', $categoria->getCodigo(), $this->escape($categoria->getNome())); ?>"><?php echo $this->escape($categoria->getNome());?></a>
-                        </h4>
-                    </div>
-                </div>
-                <?php } ?>
-                <?php } ?>
+                    {% else %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="{{ path('_category', {'id': category.id, 'name': category.name|cleanString}) }}">{{ category.name|e }}</a>
+                                </h4>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div><!--/category-products-->
         </div>
     </div>

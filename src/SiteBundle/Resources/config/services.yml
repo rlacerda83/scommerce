@@ -1,4 +1,14 @@
 services:
-#    site.example:
-#        class: SiteBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    filters_extension:
+        class: SiteBundle\Extensions\Twig\FiltersExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }
+
+    api_category:
+        class: SiteBundle\Services\Api\Category
+        arguments: ['@service_container']
+
+    api_product:
+            class: SiteBundle\Services\Api\Product
+            arguments: ['@service_container']

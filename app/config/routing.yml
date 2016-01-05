@@ -1,14 +1,5 @@
-api:
-    resource: "@ApiBundle/Resources/config/routes.yml"
-    type:     rest
-    prefix:   /api
-
 site:
     resource: "@SiteBundle/Controller/"
     type:     annotation
     prefix:   /
 
-common:
-    resource: "@CommonBundle/Controller/"
-    type:     annotation
-    prefix:   /

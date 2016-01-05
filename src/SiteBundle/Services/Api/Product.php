@@ -5,12 +5,12 @@ namespace SiteBundle\Services\Api;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 
-class Category extends ApiGateway
+class Product extends ApiGateway
 {
     protected $url;
 
-    const QS_ALL = 'common/categories';
-    const QS_TREE = 'common/categories/tree';
+    const QS_ALL = 'common/products';
+    const QS_FEATUREDS = 'common/products/featureds';
 
     /**
      * @param Request $request
@@ -23,8 +23,8 @@ class Category extends ApiGateway
         return $this->sendRequest(self::QS_ALL, $options);
     }
 
-    public function getTree()
+    public function getFeatureds()
     {
-        return $this->sendRequest(self::QS_TREE);
+        return $this->sendRequest(self::QS_FEATUREDS);
     }
 }

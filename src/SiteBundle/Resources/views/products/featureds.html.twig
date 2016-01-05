@@ -1,0 +1,9 @@
+{% block featureds %}
+    <div class="features_items"><!--features_items-->
+        <h2 class="title text-center">Features Items</h2>
+        {% for product in products %}
+            {% include '@Site/products/block.html.twig' with {'product': product} %}
+
+        {% endfor %}
+    </div>
+{% endblock %}
