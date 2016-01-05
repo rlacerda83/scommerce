@@ -1,4 +1,0 @@
-services:
-#    api.category.controller:
-#        class: ApiBundle\Controller\CategoryController
-#        arguments: ['@fos_rest.view_handler']
