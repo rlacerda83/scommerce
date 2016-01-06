@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class ProductController extends Controller
 {
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function getFeaturedsAction()
     {
         $apiProduct = $this->container->get('api_product');
@@ -22,10 +25,14 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/product/{name}/{idProduct}?sku={idSku}", name="_product")
+     * @Route("/product/{name}/{idProduct}/?sku={idSku}", name="_product")
      */
-    public function detailAction($idProduct, $idSku)
+    public function detailAction($idSku)
     {
+        $apiProduct = $this->container->get('api_product');
+        $product = $apiProduct->getDetail($idSku);
+        print_r($product);
+
         return $this->render(
             '@Site/categories/menu.html.twig',
             array('categories' => null)

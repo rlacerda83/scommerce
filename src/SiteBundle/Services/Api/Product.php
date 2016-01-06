@@ -11,6 +11,7 @@ class Product extends ApiGateway
 
     const QS_ALL = 'common/products';
     const QS_FEATUREDS = 'common/products/featureds';
+    const QS_DETAIL = 'web/products/%s/details-page';
 
     /**
      * @param Request $request
@@ -26,5 +27,11 @@ class Product extends ApiGateway
     public function getFeatureds()
     {
         return $this->sendRequest(self::QS_FEATUREDS);
+    }
+
+    public function getDetail($idSku)
+    {
+        $url = sprintf(self::QS_DETAIL, $idSku);
+        return $this->sendRequest($url);
     }
 }

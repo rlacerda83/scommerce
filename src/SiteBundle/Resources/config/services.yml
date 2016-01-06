@@ -10,5 +10,6 @@ services:
         arguments: ['@service_container']
 
     api_product:
-            class: SiteBundle\Services\Api\Product
-            arguments: ['@service_container']
+        class: SiteBundle\Services\Api\Product
+        arguments: ['@service_container']
+
