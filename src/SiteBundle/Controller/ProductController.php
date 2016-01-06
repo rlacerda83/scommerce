@@ -31,11 +31,10 @@ class ProductController extends Controller
     {
         $apiProduct = $this->container->get('api_product');
         $product = $apiProduct->getDetail($idSku);
-        print_r($product);
 
         return $this->render(
-            '@Site/categories/menu.html.twig',
-            array('categories' => null)
+            '@Site/products/details.html.twig',
+            ['product' => $product['data']]        
         );
     }
 }

@@ -1,0 +1,108 @@
+{% extends '@Site/base.html.twig' %}
+
+{% block body %}
+
+	<script>
+	function comprar() {
+		var qtde = $('#quantidade').val() ? $('#quantidade').val() : 1;
+		window.location = "<?php echo $this->BaseUrl(); ?>/carrinho/adicionar/?sku=<?php echo $this->vitrine->getSKU(); ?>&quantidade="+qtde;
+	}
+
+	jQuery(function($) {
+		$("#quantidade").bind("keyup blur focus", function(e) {
+		   e.preventDefault();
+		   var expre = /[^0-9]/g;
+		
+		   if ($(this).val().match(expre))
+			   $(this).val($(this).val().replace(expre,''));
+		});
+		
+	});
+	</script>
+
+	<section>
+		<div class="container content">
+			<div class="row">
+
+				{{ render(controller('SiteBundle:Category:renderMenu')) }}
+
+				<div class="col-sm-9 padding-right">
+					<div class="product-details"><!--product-details-->
+						<div class="col-sm-5">
+							<div class="view-product">
+								<img src="<?php echo $this->vitrine->getImagens()->seek(0)->current()->getBasePath('detalhe'); ?>" alt="" width="266"/>
+								<h3>ZOOM</h3>
+							</div>
+							<div id="similar-product" class="carousel slide" data-ride="carousel">
+								  <!-- Wrapper for slides -->
+								<div class="carousel-inner">
+									<div class="item active">
+										<?php foreach ($this->vitrine->getImagens() as $imagem) { ?>
+											<a href="javascript:;"><img src="<?php echo $imagem->getBasePath('thumb'); ?>" width="84" height="84"></a>
+										<?php } ?>
+									</div>
+								</div>
+				
+								<!-- Controls -->
+								<a class="left item-control" href="#similar-product" data-slide="prev">
+									<i class="fa fa-angle-left"></i>
+								</a>
+								<a class="right item-control" href="#similar-product" data-slide="next">
+									<i class="fa fa-angle-right"></i>
+								</a>
+							</div>
+						</div>
+						
+						<div class="col-sm-7">
+							<div class="product-information"><!--/product-information-->
+								<h2>{{ product.name|e }}</h2>
+								<p>SKU: <?php echo $this->escape($this->vitrine->getSKU());?></p>
+								<img src="images/product-details/rating.png" alt="" />
+								<span>
+									<span>R$ <?php echo App_Funcoes_Money::toCurrency($this->vitrine->getPreco()); ?></span>
+									<label>Quantity:</label>
+									<input type="text" value="1" id="quantidade"/>
+									<button type="button" class="btn btn-fefault cart" onclick="comprar();">
+										<i class="fa fa-shopping-cart"></i>
+										Buy
+									</button>
+								</span>
+								
+								<?php $listaOpcoes = $this->produto->getSKU();?>
+								<?php if($listaOpcoes->count()) { ?>
+									<p><b>Opcoes:</b>
+									<?php foreach($listaOpcoes as $sku) { ?>
+											<a href="<?php echo $this->FriendlyUrl('produto', $this->produto->getCodigo(), $this->escape($this->produto->getNome())); ?>/?sku=<?php echo $this->escape($sku->getSku()); ?>">
+												<span <?php if($sku->getSKU() == $this->vitrine->getSKU()) echo "style='color:#fe980f'" ; ?>><?php echo $this->escape($sku->getNome(false)); ?></span>
+											</a>
+									<?php } ?>
+								<?php } ?>
+								
+								<p><b>Disponibilidade:</b> <?php echo ($this->vitrine->getEstoque() <= 0 ? 'Esgotado' : 'Em estoque');  ?></p>
+								<p><b>Condition:</b> Novo</p>
+								<p><b>Brand:</b> <?php echo $this->escape($this->produto->getMarca()->getNome());?></p>
+								<a href="javascript:;"><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+							</div><!--/product-information-->
+						</div>
+					</div><!--/product-details-->
+					
+					<div class="category-tab shop-details-tab"><!--category-tab-->
+						<div class="col-sm-12">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#details" data-toggle="tab">Descricao</a></li>
+							</ul>
+						</div>
+						<div class="tab-content">
+							<div class="tab-pane fade active in" id="details" >
+								<div class="col-sm-12">
+									<p><?php echo $this->produto->getDescricao();?></p>
+								</div>
+							</div>
+							
+						</div>
+					</div><!--/category-tab-->
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
