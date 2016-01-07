@@ -1,25 +1,7 @@
 {% extends '@Site/base.html.twig' %}
+{% block title %}{{ product.name|e }}{% endblock %}
 
 {% block body %}
-
-	<script>
-	function comprar() {
-		var qtde = $('#quantidade').val() ? $('#quantidade').val() : 1;
-		window.location = "<?php echo $this->BaseUrl(); ?>/carrinho/adicionar/?sku=<?php echo $this->vitrine->getSKU(); ?>&quantidade="+qtde;
-	}
-
-	jQuery(function($) {
-		$("#quantidade").bind("keyup blur focus", function(e) {
-		   e.preventDefault();
-		   var expre = /[^0-9]/g;
-		
-		   if ($(this).val().match(expre))
-			   $(this).val($(this).val().replace(expre,''));
-		});
-		
-	});
-	</script>
-
 	<section>
 		<div class="container content">
 			<div class="row">
@@ -30,16 +12,18 @@
 					<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img src="<?php echo $this->vitrine->getImagens()->seek(0)->current()->getBasePath('detalhe'); ?>" alt="" width="266"/>
+								<img src="{{ asset('home/' ~ sku.images[0].image, 'site_img') }}" alt="" width="266"/>
 								<h3>ZOOM</h3>
 							</div>
 							<div id="similar-product" class="carousel slide" data-ride="carousel">
 								  <!-- Wrapper for slides -->
 								<div class="carousel-inner">
 									<div class="item active">
-										<?php foreach ($this->vitrine->getImagens() as $imagem) { ?>
-											<a href="javascript:;"><img src="<?php echo $imagem->getBasePath('thumb'); ?>" width="84" height="84"></a>
-										<?php } ?>
+										{% for skuImage in sku.images %}
+											<a href="javascript:;">
+                                                <img src="{{ asset('home/' ~ skuImage.image, 'site_img') }}" width="84" height="84">
+                                            </a>
+										{% endfor %}
 									</div>
 								</div>
 				
@@ -56,32 +40,30 @@
 						<div class="col-sm-7">
 							<div class="product-information"><!--/product-information-->
 								<h2>{{ product.name|e }}</h2>
-								<p>SKU: <?php echo $this->escape($this->vitrine->getSKU());?></p>
-								<img src="images/product-details/rating.png" alt="" />
+								<p>SKU:{{ sku.sku }}</p>
+								<img src="{{ asset('product-details/rating.png', 'site_img') }}" alt="" />
 								<span>
-									<span>R$ <?php echo App_Funcoes_Money::toCurrency($this->vitrine->getPreco()); ?></span>
+									<span>$ {{ sku.price }}</span>
 									<label>Quantity:</label>
-									<input type="text" value="1" id="quantidade"/>
-									<button type="button" class="btn btn-fefault cart" onclick="comprar();">
+									<input type="text" value="1" id="qty" maxlength="3"/>
+									<button type="button" class="btn btn-fefault cart" onclick="buy();">
 										<i class="fa fa-shopping-cart"></i>
-										Buy
+										Add to cart
 									</button>
 								</span>
-								
-								<?php $listaOpcoes = $this->produto->getSKU();?>
-								<?php if($listaOpcoes->count()) { ?>
-									<p><b>Opcoes:</b>
-									<?php foreach($listaOpcoes as $sku) { ?>
-											<a href="<?php echo $this->FriendlyUrl('produto', $this->produto->getCodigo(), $this->escape($this->produto->getNome())); ?>/?sku=<?php echo $this->escape($sku->getSku()); ?>">
-												<span <?php if($sku->getSKU() == $this->vitrine->getSKU()) echo "style='color:#fe980f'" ; ?>><?php echo $this->escape($sku->getNome(false)); ?></span>
-											</a>
-									<?php } ?>
-								<?php } ?>
-								
-								<p><b>Disponibilidade:</b> <?php echo ($this->vitrine->getEstoque() <= 0 ? 'Esgotado' : 'Em estoque');  ?></p>
-								<p><b>Condition:</b> Novo</p>
-								<p><b>Brand:</b> <?php echo $this->escape($this->produto->getMarca()->getNome());?></p>
-								<a href="javascript:;"><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+
+                                {% if product.skus|length > 1 %}
+                                    <p><b>Options:</b></p>
+                                    {% for optionSku in product.skus %}
+                                        <a href="{{ path('_product', {'idProduct': product.id, 'name': product.name|cleanString, 'idSku': optionSku.id}) }}">
+                                            <span {{ (sku.id == optionSku.id) ? "style='color:#fe980f'" : '' }}>{{ optionSku.option }}</span>
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
+
+								<p><b>Disponibilidade:</b> {{ (sku.stock <= 0) ? 'Indisponible' : 'In Stock' }}</p>
+								<p><b>Condition:</b> New</p>
+								<p><b>Brand:</b> {{ product.supplier }}</p>
 							</div><!--/product-information-->
 						</div>
 					</div><!--/product-details-->
@@ -89,20 +71,44 @@
 					<div class="category-tab shop-details-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#details" data-toggle="tab">Descricao</a></li>
+								<li class="active"><a href="#details" data-toggle="tab">Description</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
 							<div class="tab-pane fade active in" id="details" >
 								<div class="col-sm-12">
-									<p><?php echo $this->produto->getDescricao();?></p>
+									<p style="padding: 10px">{{ product.description|nl2br }}</p>
 								</div>
 							</div>
 							
 						</div>
 					</div><!--/category-tab-->
+
+					{{ render(controller('SiteBundle:Recommendation:getRecommendations')) }}
 				</div>
 			</div>
 		</div>
 	</section>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		function buy() {
+			var qtde = $('#qty').val() ? $('#qty').val() : 1;
+			window.location = "<?php echo $this->BaseUrl(); ?>/carrinho/adicionar/?sku=<?php echo $this->vitrine->getSKU(); ?>&quantidade="+qtde;
+		}
+
+		jQuery(function($) {
+			$("#qty").bind("keyup blur focus", function(e) {
+				e.preventDefault();
+				var expre = /[^0-9]/g;
+
+				if ($(this).val().match(expre))
+				$(this).val($(this).val().replace(expre,''));
+			});
+
+		});
+	</script>
+
 {% endblock %}

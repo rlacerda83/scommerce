@@ -32,9 +32,20 @@ class ProductController extends Controller
         $apiProduct = $this->container->get('api_product');
         $product = $apiProduct->getDetail($idSku);
 
+        $skuActive = null;
+        foreach ($product['data']['skus'] as $sku) {
+            if ($idSku == $sku['id']) {
+                $skuActive = $sku;
+                break;
+            }
+        }
+
         return $this->render(
             '@Site/products/details.html.twig',
-            ['product' => $product['data']]        
+            [
+                'product' => $product['data'],
+                'sku' => $skuActive
+            ]
         );
     }
 }

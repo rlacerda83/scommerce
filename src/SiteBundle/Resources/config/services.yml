@@ -13,3 +13,7 @@ services:
         class: SiteBundle\Services\Api\Product
         arguments: ['@service_container']
 
+    api_recommendation:
+        class: SiteBundle\Services\Api\Recommendation
+        arguments: ['@service_container']
+
