@@ -1,0 +1,18 @@
+{% extends '@Site/base.html.twig' %}
+
+{% block body %}
+    {{ include('@Site/slider.html.twig') }}
+
+    <section>
+        <div class="container">
+            <div class="row">
+
+                {{ render(controller('SiteBundle:Category:renderMenu')) }}
+
+                <div class="col-sm-9 padding-right">
+                    {{ include('@Site/products/featureds.html.twig', { 'products': products }) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 namespace SiteBundle\Services\Api;
 
-use Symfony\Component\DependencyInjection\Container;
+use CommonBundle\Factory\CategoryFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 class Category extends ApiGateway
@@ -25,6 +25,7 @@ class Category extends ApiGateway
 
     public function getTree()
     {
-        return $this->sendRequest(self::QS_TREE);
+        $result = $this->sendRequest(self::QS_TREE);
+        return CategoryFactory::createByTree($result);
     }
 }

@@ -39,16 +39,16 @@ class ApiGateway
     }
 
     /**
-     * @param $method
+     * @param $endPoint
      * @param array $options
      * @param string $requestType
      * @return bool|mixed
      * @throws \Exception
      */
-    public function sendRequest($method = null, $options = [], $requestType = 'get')
+    public function sendRequest($endPoint = null, $options = [], $requestType = 'get')
     {
         try {
-            $response = $this->client->request($requestType, $this->baseUrl . $method, $options);
+            $response = $this->client->request($requestType, $this->baseUrl . $endPoint, $options);
             if ($response->getStatusCode() == 200 ) {
                 return json_decode($response->getBody()->getContents(), true);
             }

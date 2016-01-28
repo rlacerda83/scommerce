@@ -48,4 +48,21 @@ class ProductController extends Controller
             ]
         );
     }
+
+
+    public function searchAction($id)
+    {
+        $apiProducts = $this->container->get('api_product');
+        $filter = [
+            'category|id' => $id
+        ];
+
+        $products = $apiProducts->getAll($filter);
+        print_r($products); die;
+
+        return $this->render(
+            '@Site/categories/menu.html.twig',
+            array('categories' => bull)
+        );
+    }
 }

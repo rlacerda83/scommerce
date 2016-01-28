@@ -13,14 +13,14 @@ class Product extends ApiGateway
     const QS_FEATUREDS = 'common/products/featureds';
     const QS_DETAIL = 'web/products/%s/details-page';
 
-    /**
-     * @param Request $request
-     * @return bool|mixed
-     * @throws \Exception
-     */
-    public function getAll(Request $request)
+
+    public function getAll($filter = null)
     {
-        $options = $this->parseQueryString($request);
+        $options = null;
+        if ($filter !== null) {
+            $options['query'] = $filter;
+        }
+
         return $this->sendRequest(self::QS_ALL, $options);
     }
 

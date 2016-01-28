@@ -17,7 +17,7 @@ class CategoryController extends Controller
 
         return $this->render(
             '@Site/categories/menu.html.twig',
-            array('categories' => $categories['data'])
+            array('categories' => $categories)
         );
     }
 
@@ -26,9 +26,16 @@ class CategoryController extends Controller
      */
     public function getProductsAction($id)
     {
+        $apiProducts = $this->container->get('api_product');
+        $filter = [
+            'category|id' => $id
+        ];
+
+        $products = $apiProducts->getAll($filter);
+
         return $this->render(
-            '@Site/categories/menu.html.twig',
-            array('categories' => bull)
+            '@Site/categories/index.html.twig',
+            array('products' => $products['data'])
         );
     }
 }

@@ -25,14 +25,4 @@ class RecommendationController extends Controller
         );
     }
 
-    /**
-     * @Route("/category/{name}/{id}", name="_category")
-     */
-    public function getProductsAction($id)
-    {
-        return $this->render(
-            '@Site/categories/menu.html.twig',
-            array('categories' => bull)
-        );
-    }
 }
