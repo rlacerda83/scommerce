@@ -67,7 +67,7 @@ class ProductEntity
 	/**
 	 * @var SkuCollection
 	 */
-	protected $sku;
+	protected $skuCollection;
 
 
 	public function __construct()
@@ -105,6 +105,22 @@ class ProductEntity
 	public function setName($name)
 	{
 		$this->name = (string) $name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCreatedAt()
+	{
+		return (string) $this->createdAt;
+	}
+
+	/**
+	 * @param $createdAt
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = (string) $createdAt;
 	}
 
 	/**
@@ -158,6 +174,22 @@ class ProductEntity
 	/**
 	 * @return string
 	 */
+	public function getMetaTags()
+	{
+		return (string) $this->metaTags;
+	}
+
+	/**
+	 * @param $metaTags
+	 */
+	public function setMetaTags($metaTags)
+	{
+		$this->metaTags = (string) $metaTags;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getMetaTitle()
 	{
 		return (string) $this->metaTitle;
@@ -184,6 +216,76 @@ class ProductEntity
 	 */
 	public function setMetaDescription($metaDescription)
 	{
-		$this->metaDescription = (int) $metaDescription;
+		$this->metaDescription = (string) $metaDescription;
+	}
+
+	/**
+	 * @param $featured
+	 */
+	public function setFeatured($featured)
+	{
+		$this->featured = (bool) $featured;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getFeatured()
+	{
+		return (bool) $this->featured;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStatus()
+	{
+		return (int) $this->status;
+	}
+
+	/**
+	 * @param $status
+	 */
+	public function setStatus($status)
+	{
+		$this->metaDescription = (int) $status;
+	}
+
+	public function getTotalStock()
+	{
+		$stock = 0;
+		foreach ($this->getSkuCollection() as $sku) {
+			if(!$sku->getStatus()) continue;
+			$stock += $sku->getStock();
+		}
+		return $stock;
+	}
+
+	public function getFeaturedSku()
+	{
+		$featuredSku = null;
+		foreach ($this->getSkuCollection() as $sku) {
+			if ($sku->getShowCase() === true) {
+				$featuredSku = $sku;
+				break;
+			}
+		}
+		return $featuredSku;
+	}
+
+	/**
+	 * @return SkuCollection
+	 */
+	public function getSkuCollection()
+	{
+		return $this->skuCollection;
+	}
+
+	/**
+	 * @param SkuCollection $collection
+	 */
+	public function setSkuCollection(SkuCollection $collection)
+	{
+		$this->skuCollection = $collection;
 	}
 }

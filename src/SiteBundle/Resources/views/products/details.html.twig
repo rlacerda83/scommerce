@@ -1,5 +1,5 @@
 {% extends '@Site/base.html.twig' %}
-{% block title %}{{ product.name|e }}{% endblock %}
+{% block title %}{{ sku.product.name|e }}{% endblock %}
 
 {% block body %}
 	<section>
@@ -12,14 +12,14 @@
 					<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img src="{{ asset('home/' ~ sku.images[0].image, 'site_img') }}" alt="" width="266"/>
+								<img src="{{ asset('home/' ~ sku.imageCollection.first.image, 'site_img') }}" alt="" width="266"/>
 								<h3>ZOOM</h3>
 							</div>
 							<div id="similar-product" class="carousel slide" data-ride="carousel">
 								  <!-- Wrapper for slides -->
 								<div class="carousel-inner">
 									<div class="item active">
-										{% for skuImage in sku.images %}
+										{% for skuImage in sku.imageCollection %}
 											<a href="javascript:;">
                                                 <img src="{{ asset('home/' ~ skuImage.image, 'site_img') }}" width="84" height="84">
                                             </a>
@@ -39,7 +39,7 @@
 						
 						<div class="col-sm-7">
 							<div class="product-information"><!--/product-information-->
-								<h2>{{ product.name|e }}</h2>
+								<h2>{{ sku.product.name|e }}</h2>
 								<p>SKU:{{ sku.sku }}</p>
 								<img src="{{ asset('product-details/rating.png', 'site_img') }}" alt="" />
 								<span>
@@ -52,18 +52,18 @@
 									</button>
 								</span>
 
-                                {% if product.skus|length > 1 %}
+                                {% if sku.product.skuCollection|length > 1 %}
                                     <p><b>Options:</b></p>
-                                    {% for optionSku in product.skus %}
-                                        <a href="{{ path('_product', {'idProduct': product.id, 'name': product.name|cleanString, 'idSku': optionSku.id}) }}">
-                                            <span {{ (sku.id == optionSku.id) ? "style='color:#fe980f'" : '' }}>{{ optionSku.option }}</span>
+                                    {% for optionSku in sku.attributeCollection if optionSku.unique == false %}
+                                        <a href="{{ path('_product', {'idProduct': sku.product.id, 'name': sku.product.name|cleanString, 'idSku': sku.id}) }}">
+                                            <span {{ (sku.id == optionSku.id) ? "style='color:#fe980f'" : '' }}>{{ optionSku.value }}</span>
                                         </a>
                                     {% endfor %}
                                 {% endif %}
 
 								<p><b>Disponibilidade:</b> {{ (sku.stock <= 0) ? 'Indisponible' : 'In Stock' }}</p>
 								<p><b>Condition:</b> New</p>
-								<p><b>Brand:</b> {{ product.supplier }}</p>
+								<p><b>Brand:</b> {{ sku.product.supplier.name }}</p>
 							</div><!--/product-information-->
 						</div>
 					</div><!--/product-details-->
@@ -77,7 +77,7 @@
 						<div class="tab-content">
 							<div class="tab-pane fade active in" id="details" >
 								<div class="col-sm-12">
-									<p style="padding: 10px">{{ product.description|nl2br }}</p>
+									<p style="padding: 10px">{{ sku.product.description|nl2br }}</p>
 								</div>
 							</div>
 							

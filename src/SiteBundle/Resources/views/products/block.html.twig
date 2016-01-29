@@ -2,18 +2,18 @@
     <div class="product-image-wrapper">
         <div class="single-products">
             <div class="productinfo text-center">
-                <img width="268" height="249" src="{{ asset('home/' ~ product.image, 'site_img') }}" alt="{{ product.name|e }}">
-                <h2>${{ product.price }}</h2>
+                <img width="268" height="249" src="{{ asset('home/' ~ product.featuredSku.imageCollection.first.image, 'site_img') }}" alt="{{ product.name|e }}">
+                <h2>${{ product.featuredSku.price }}</h2>
                 <p>{{ product.name|e }}</p>
-                <a href="{{ path('_product', {'idProduct': product.id, 'name': product.name|cleanString, 'idSku': product.sku_id}) }}" class="btn btn-default add-to-cart">
+                <a href="{{ path('_product', {'idProduct': product.id, 'name': product.name|cleanString, 'idSku': product.featuredSku.id}) }}" class="btn btn-default add-to-cart">
                     <i class="fa fa-shopping-cart"></i>Details
                 </a>
             </div>
             <div class="product-overlay">
                 <div class="overlay-content">
-                    <h2>${{ product.price }}</h2>
+                    <h2>${{ product.featuredSku.price }}</h2>
                     <p>{{ product.name|e }}</p>
-                    <a href="{{ path('_product', {'idProduct': product.id, 'name': product.name|cleanString, 'idSku': product.sku_id}) }}" class="btn btn-default add-to-cart">
+                    <a href="{{ path('_product', {'idProduct': product.id, 'name': product.name|cleanString, 'idSku': product.featuredSku.id}) }}" class="btn btn-default add-to-cart">
                         <i class="fa fa-shopping-cart"></i>Details
                     </a>
                 </div>

@@ -26,6 +26,6 @@ class Category extends ApiGateway
     public function getTree()
     {
         $result = $this->sendRequest(self::QS_TREE);
-        return CategoryFactory::createByTree($result);
+        return CategoryFactory::createByTree($result['data']);
     }
 }

@@ -20,8 +20,7 @@ class CategoryFactory
     {
         $collection = new CategoryCollection();
 
-        foreach ($categories['data'] as $category)
-        {
+        foreach ($categories as $category) {
             $objCategory = self::setFromArray($category);
             $collection->add($objCategory);
         }
@@ -47,8 +46,7 @@ class CategoryFactory
             return $category;
         }
 
-        foreach ($arrayCategory['children'] as $children)
-        {
+        foreach ($arrayCategory['children'] as $children) {
             $category->getChildren()->add(self::setFromArray($children));
         }
 

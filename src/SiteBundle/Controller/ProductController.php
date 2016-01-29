@@ -20,7 +20,7 @@ class ProductController extends Controller
 
         return $this->render(
             '@Site/products/featureds.html.twig',
-            array('products' => $products['data'])
+            ['products' => $products]
         );
     }
 
@@ -32,20 +32,17 @@ class ProductController extends Controller
         $apiProduct = $this->container->get('api_product');
         $product = $apiProduct->getDetail($idSku);
 
-        $skuActive = null;
-        foreach ($product['data']['skus'] as $sku) {
-            if ($idSku == $sku['id']) {
-                $skuActive = $sku;
+        $currentSku = null;
+        foreach ($product->getSkuCollection() as $sku) {
+            if ($idSku == $sku->getId()) {
+                $currentSku = $sku;
                 break;
             }
         }
 
         return $this->render(
             '@Site/products/details.html.twig',
-            [
-                'product' => $product['data'],
-                'sku' => $skuActive
-            ]
+            ['sku' => $currentSku]
         );
     }
 
