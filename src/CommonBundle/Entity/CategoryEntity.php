@@ -1,6 +1,7 @@
 <?php
 
 namespace CommonBundle\Entity;
+
 use CommonBundle\Collection\CategoryCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 
